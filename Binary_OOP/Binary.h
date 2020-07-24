@@ -69,11 +69,11 @@ public:
 			this->bin[i] = bit;
 		}
 	}
-	bool operator [] (int i) const
+
+	bool operator [] (const int i) const
 	{
 		return this->bin[i];
 	}
-	
 	void print() const
 	{
 		cout << endl << this << ":" << endl << "size >>\t" << bin.size() << endl << "bin >> ";
@@ -85,8 +85,7 @@ public:
 			}
 			cout << this->bin[i];
 		}
-		cout << endl << "DEX >> " << this->convert2in10();
-		
+		cout << endl << "DEX >> " << this->convert2in10();	
 	}
 
 	unsigned long long int convert2in10()const
