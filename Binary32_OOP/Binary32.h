@@ -159,10 +159,28 @@ bool operator [](const size_t index)const
 	return this->bin[index];
 }
 
-
+/*
+std::vector<bool> operator~()const
+{
+	std::vector <bool>arr(this->bin.size());
+	for (int i = 0; i < this->bin.size(); i++)
+	{
+		arr[i] = !this->bin[i];
+	}
+	return arr;
+}*/
 
 };
 
+std::vector<bool> operator ~ (const std::vector<bool> bin) 
+{
+	std::vector <bool>arr(bin.size());
+	for (int i = 0; i < bin.size(); i++)
+	{
+		arr[i] = !bin[i];
+	}
+	return arr;
+}
 
 
 std::vector<bool> convert10in2(size_t numb)
@@ -187,7 +205,6 @@ std::vector<bool> convert10in2(size_t numb)
 	return bin;
 
 }
-
 
 
 
@@ -217,9 +234,8 @@ Binary32 operator+(const Binary32& left, const Binary32& right)
 		else if ((left[i] && right[i]) && temp)
 		{
 			arr[i] = 1;
-			temp = 1;
 		}
-		else if ((!left[i] && !right[i]) && !temp)
+		else// if ((!left[i] && !right[i]) && !temp)
 		{
 			arr[i] = 0;
 		}
@@ -228,7 +244,6 @@ Binary32 operator+(const Binary32& left, const Binary32& right)
 	return arr;
 
 }
-
 Binary32 operator-(const Binary32& left, const Binary32& right)
 {
 
@@ -236,54 +251,83 @@ Binary32 operator-(const Binary32& left, const Binary32& right)
 	bool temp = 0;
 	int i = left.get_size() - 1;
 
-
-	// 3 XOR gate
 	while (i)
 	{
-		//	(	1			1			0	)	  (	   0			0			0  )		
-		if (((left[i] && right[i]) && !temp) ||  ((!left[i] && !right[i]) && !temp) || (left[i] && ! right[i] )      )
+		//	(	1			1			0	)	  (	   0			0			0  )    (	  1           0         1   )	
+		if (((left[i] && right[i]) && !temp) || ((!left[i] && !right[i]) && !temp) || ((left[i] && !right[i]) && temp))
 		{
 			arr[i] = 0;
 			temp = 0;
 		}
-			//     (1			0			 0)
-		else if ((left[i] && !right[i]) && !temp)
+		 //     (1			0			 0)			  (     1          1         1  )	  (		0		   1		 1  )
+		else if (((left[i] && !right[i]) && !temp) || ((left[i] && right[i]) && temp) || ((!left[i] && !right[i]) && temp))
 		{
 			arr[i] = 1;
 		}
-		else if ((!left[i] && right[i]))
+		else if ((!left[i] && right[i]) && !temp)
 		{
 			arr[i] = 1;
 			temp = 1;
-		}
-		else if ((left[i] && right[i]) && temp) 
+		}       
+		else  // if ((!left[i] && right[i]) && temp)
 		{
-			arr[i] = 1;
-			temp = 1;
+			arr[i] = 0;
 		}
 		i--;
 	}
-
-	/*if (temp && i < 31)
-	{
-		arr[i - 1] = temp;
-	}*/
 	return arr;
 
 }
+
 std::ostream& operator<<(std::ostream& os, Binary32& obj)
 {
 	obj.print();
 	cout << endl;
 	return os;
 }
+std::vector<bool> operator ^(const Binary32& left, const Binary32& right)
+{
+	std::vector<bool> arr;
+	left.get_bin().size() > right.get_bin().size() ? arr = left.get_bin() : arr = right.get_bin();
 
+	for (size_t i = 0; i < left.get_bin().size() && i < right.get_bin().size(); i++)
+	{
+		if ((!left[i] && !right[i]) || (left[i] && right[i]))
+		{
+			arr[i] = 0;
+		}
+		else
+		{
+			arr[i] = 1;
+		}
+	}
+	return arr;
+}
+std::vector<bool> operator |(const Binary32& left, const Binary32& right)
+{
+	std::vector<bool> arr;
+	left.get_bin().size() > right.get_bin().size() ? arr = left.get_bin() : arr = right.get_bin();
 
-/*
+	for (size_t i = 0; i < left.get_bin().size() && i < right.get_bin().size(); i++)
+	{
+		if (!left[i] && !right[i])
+		{
+			arr[i] = 0;
+		}
+		else
+		{
+			arr[i] = 1;
+		}
+
+	}
+	return arr;
+}
 std::vector<bool> operator &(const Binary32& left, const Binary32& right)
 {
 	std::vector<bool> arr;
-	for (size_t i = 0;; i++)
+	left.get_bin().size() > right.get_bin().size() ? arr = left.get_bin() : arr = right.get_bin();
+
+	for (size_t i = 0; i < left.get_bin().size() && i < right.get_bin().size(); i++)
 	{
 		if (left[i] && right[i])
 		{
@@ -295,7 +339,16 @@ std::vector<bool> operator &(const Binary32& left, const Binary32& right)
 		}
 	}
 	return arr;
-}*/
+}
+
+
+std::vector<bool> NAND(const Binary32& left, const Binary32& right)
+{
+	std::vector<bool> arr = ~(left.get_bin() ^ right.get_bin());
+	return arr;
+}
+
+
 
 
 
