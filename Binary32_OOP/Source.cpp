@@ -27,7 +27,12 @@ void main()
 	zr = p | na;
 	cout << "Or__________" << zr << endl;
 	zr = p & na;
-	cout << "And_________" << zr << endl;
+	cout << "And_________" << zr << endl;	
+	p = 4294967295;
+	na = 65464568767;
+	zr = NAND(p , na);
+	cout << "NAND_________" << zr << endl;
+
 
 /*
 1100101

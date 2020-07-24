@@ -108,6 +108,16 @@ public:
 		set_bin(bin);
 		return *this;
 	}
+	
+	
+	Binary32& operator=(size_t number)
+	{
+		this->bin.clear();
+		this->bin.resize(this->size);
+		set_bin(convert10in2(number));
+		cout << "NumbCopyAssigmentr >> \t" << this << endl;
+		return*this;
+	}
 
 
 
