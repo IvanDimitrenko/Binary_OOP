@@ -31,16 +31,16 @@ void main()
 	p = 4294967295;
 	na = 65464568767;
 	zr = NAND(p , na);
-	cout << "NAND_________" << zr << endl;
+	cout << "NAND________" << zr << endl;
+	cout << "\n--------------------------------------------\n";
+	Binary32 sh(126);
+	cout << sh;
 
+	sh = sh << 3;
+	cout << sh;
 
 /*
-1100101
-0110011
-*/
-
-
-	/*for (int i = 0; i < 30; i++)
+	for (int i = 0; i < 30; i++)
 	{
 		for (int y = 1; y < 30; y++)
 		{

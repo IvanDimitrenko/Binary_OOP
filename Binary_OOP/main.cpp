@@ -1,7 +1,6 @@
 #include "Binary.h"
 #include"Header.h"
 
-#define BINARY_OR_BINARY32;
 void main()
 {
 

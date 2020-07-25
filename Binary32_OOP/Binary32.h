@@ -137,9 +137,9 @@ public:
 
 
 
-	unsigned long int convert2in10()const
+	size_t convert2in10()const
 	{
-		unsigned long long int number = 0;
+		size_t number = 0;
 		for (int i = bin.size() - 1, j = 0; j < bin.size(); j++, i--)
 		{
 			if (this->bin[j]) {
@@ -191,7 +191,27 @@ std::vector<bool> operator ~ (const std::vector<bool> bin)
 	}
 	return arr;
 }
+// Don't work 
+std::vector<bool> operator << (const Binary32& other, size_t shift )
+{
+	std::vector<bool> arr = other.get_bin();
+	 size_t size = 0;
 
+	 while (!arr[size++]);
+
+	 size++;
+	 bool buff = arr[size];
+
+	 for (int i = size; i < arr.size() - 1; i++)
+	 {
+		 arr[i] = arr[i + 1];
+	 }
+	 arr[arr.size() - 1] = buff;
+
+	if(shift) return arr << --shift ;
+
+	return arr;
+}
 
 std::vector<bool> convert10in2(size_t numb)
 {
@@ -350,8 +370,6 @@ std::vector<bool> operator &(const Binary32& left, const Binary32& right)
 	}
 	return arr;
 }
-
-
 std::vector<bool> NAND(const Binary32& left, const Binary32& right)
 {
 	std::vector<bool> arr = ~(left.get_bin() ^ right.get_bin());
